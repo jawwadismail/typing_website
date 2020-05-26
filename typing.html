@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Typing speed</title>
+    <style>
+      .center {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}
+    </style>
+  </head>
+  <body>
+    <h2 align="center">Welcome to Typing speed</h2>
+    <div align="center">    
+          <h2 id="msg"> </h2>
+      <textarea style="background: grey" class="center" cols="100" rows="20" id="txt" align = "center"></textarea>
+      <br>
+      <button class="btn" id="btn">Start</button>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script>
+      const words = ['I am Jawwad and I am a good boy in reality',
+                     'There was a time when i was alone no where to go',
+                     'and no place to call home my only friend was a man',
+                     'In the moon and even sometimes he would go away too'
+                     ];
+
+      const msg = document.getElementById('msg');
+      const txt = document.getElementById('txt');
+      const btn = document.getElementById('btn');
+
+      let startTime,endTime;
+      txt.disabled = true;
+
+      const playGame = () =>{
+        let randomNumber = Math.floor(Math.random()*words.length);
+
+        msg.innerText = words[randomNumber];
+
+        let date = new Date();
+        startTime = date.getTime();
+
+        //For Errors lets see how this works
+
+
+        btn.innerText = 'Done';
+
+      }
+
+      const endPlay = () =>{
+        let date = new Date();
+        endTime = date.getTime();
+        let total = ((endTime - startTime)/1000);
+
+        let totalStr = txt.value;
+        console.log(totalStr);
+        let wordcount =totalStr.split(' ').length;
+
+
+
+        let speed = Math.round((wordcount / total)*60);
+        let final = 'You typed total at '  + speed + ' words per minute';
+        final += compareWords(msg.innerText,totalStr);
+        msg.innerText = final;
+      }
+
+      const compareWords = (str1,str2) =>{
+
+        let words1 = str1.split(' ');
+        let words2 = str2.split(' ');
+        let cnt = 0
+        console.log(words1);
+        console.log(words1.length);
+        for(i =0;i<words1.length;i++){
+          if(words1[i] == words2[i]){
+            cnt = cnt + 1;
+          }
+        }
+
+        let errorWords = (words1.length - cnt);
+        return (' '+ cnt + " Correct out of "+ words1.length + " words and the total no of errors are "+errorWords +'.'); 
+      }
+      btn.addEventListener('click',function(){
+        if(this.innerText == 'Start'){
+          txt.disabled = false;
+          playGame();
+
+        }else{
+          btn.innerText = 'Start';
+          txt.disabled = true;
+          endPlay();
+        }
+              });
+    </script>
+
+  </body>
+</html>
+
